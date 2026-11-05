@@ -563,8 +563,8 @@
                     status: 'New',
                     timestamp: serverTimestamp()
                 };
-                const inquiriesRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
-                addDoc(inquiriesRef, inquiryData);
+                const inquiriesRef = collection(db, 'sras_inquiries');
+            addDoc(inquiriesRef, inquiryData);
             } catch (err) {
                 console.error("Database save warning:", err);
             }
@@ -607,7 +607,7 @@
                     status: 'New',
                     timestamp: serverTimestamp()
                 };
-                const inquiriesRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
+                const inquiriesRef = collection(db, 'sras_inquiries');
                 addDoc(inquiriesRef, inquiryData);
             } catch (err) {
                 console.error("Database save warning:", err);
