@@ -434,15 +434,35 @@
         }
 
         // Global Function Attachments
-  window.handleQuoteSubmit = function(event) {
+ window.handleQuoteSubmit = async function(event) {
             event.preventDefault();
             
             const name = document.getElementById('custName')?.value || '';
             const phone = document.getElementById('custPhone')?.value || '';
-            const email = document.getElementById('custEmail')?.value || '';
+            const email = document.getElementById('custEmail')?.value || 'N/A';
             const product = document.getElementById('custProduct')?.value || '';
-            const message = document.getElementById('custMessage')?.value || '';
+            const message = document.getElementById('custMessage')?.value || 'No specific notes';
 
+            // 1. Save entry to Firebase Firestore database (Admin Dashboard tracking)
+            try {
+                const inquiryData = {
+                    customerName: name,
+                    phone: phone,
+                    email: email,
+                    product: product,
+                    message: message,
+                    status: 'New',
+                    timestamp: serverTimestamp(),
+                    submittedBy: currentUser ? currentUser.uid : 'anonymous'
+                };
+
+                const inquiriesRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
+                await addDoc(inquiriesRef, inquiryData);
+            } catch (err) {
+                console.error("Database save error:", err);
+            }
+
+            // 2. Build WhatsApp text
             const whatsappText = `*New Quote Request - SRAS Automation*%0A%0A` +
                 `*Name:* ${encodeURIComponent(name)}%0A` +
                 `*Phone:* ${encodeURIComponent(phone)}%0A` +
@@ -450,12 +470,16 @@
                 `*Product:* ${encodeURIComponent(product)}%0A` +
                 `*Message:* ${encodeURIComponent(message)}`;
 
-            window.open(`https://wa.me/919341218126?text=${whatsappText}`, '_blank');
-            
-            document.getElementById('quoteForm').reset();
-            if (typeof closeQuoteModal === 'function') {
-                closeQuoteModal();
+            const whatsappUrl = `https://wa.me/919341218126?text=${whatsappText}`;
+
+            // 3. Show instant success message with a guaranteed clickable WhatsApp button inside the modal
+            const statusDiv = document.getElementById('quoteSubmitStatus');
+            if (statusDiv) {
+                statusDiv.classList.remove('hidden', 'text-red-600');
+                statusDiv.classList.add('text-emerald-600', 'font-bold');
+                statusDiv.innerHTML = `Saved successfully! <br><a href="${whatsappUrl}" target="_blank" class="inline-block mt-2 bg-emerald-600 text-white px-4 py-2 rounded-lg text-xs shadow hover:bg-emerald-700"><i class="fa-brands fa-whatsapp"></i> Click here to send via WhatsApp</a>`;
             }
+        };
         };
 
                 const inquiriesRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
