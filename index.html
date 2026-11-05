@@ -434,28 +434,29 @@
         }
 
         // Global Function Attachments
-        window.handleQuoteSubmit = async function(event) {
+  window.handleQuoteSubmit = function(event) {
             event.preventDefault();
-            const submitBtn = document.getElementById('quoteSubmitBtn');
-            const statusDiv = document.getElementById('quoteSubmitStatus');
             
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
-            statusDiv.classList.remove('hidden', 'text-red-600', 'text-emerald-600');
-            statusDiv.classList.add('text-slate-600');
-            statusDiv.innerText = "Connecting to database...";
+            const name = document.getElementById('custName')?.value || '';
+            const phone = document.getElementById('custPhone')?.value || '';
+            const email = document.getElementById('custEmail')?.value || '';
+            const product = document.getElementById('custProduct')?.value || '';
+            const message = document.getElementById('custMessage')?.value || '';
 
-            try {
-                const inquiryData = {
-                    customerName: document.getElementById('custName').value,
-                    phone: document.getElementById('custPhone').value,
-                    email: document.getElementById('custEmail').value || 'N/A',
-                    product: document.getElementById('custProduct').value,
-                    message: document.getElementById('custMessage').value || 'No specific notes',
-                    status: 'New',
-                    timestamp: serverTimestamp(),
-                    submittedBy: currentUser ? currentUser.uid : 'anonymous'
-                };
+            const whatsappText = `*New Quote Request - SRAS Automation*%0A%0A` +
+                `*Name:* ${encodeURIComponent(name)}%0A` +
+                `*Phone:* ${encodeURIComponent(phone)}%0A` +
+                `*Email:* ${encodeURIComponent(email)}%0A` +
+                `*Product:* ${encodeURIComponent(product)}%0A` +
+                `*Message:* ${encodeURIComponent(message)}`;
+
+            window.open(`https://wa.me/919341218126?text=${whatsappText}`, '_blank');
+            
+            document.getElementById('quoteForm').reset();
+            if (typeof closeQuoteModal === 'function') {
+                closeQuoteModal();
+            }
+        };
 
                 const inquiriesRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
                 await addDoc(inquiriesRef, inquiryData);
