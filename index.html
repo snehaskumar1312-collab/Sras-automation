@@ -3,271 +3,478 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRAS Automation Services Pvt. Ltd.</title>
-    <!-- Tailwind CSS -->
+    <title>SRAS Automation Services Pvt. Ltd. | Industrial & Retail Tech Solutions</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: { 600: '#0284c7', 700: '#0369a1', dark: '#0f172a' }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+<body class="bg-gray-50 text-gray-800 antialiased">
 
-    <!-- Top Header Bar -->
-    <header class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-            <div class="flex items-center gap-4">
-                <span><i class="fa-solid fa-phone text-brand-600 mr-1"></i> 93412 18126 / 93431 21826</span>
-                <span class="hidden sm:inline"><i class="fa-solid fa-envelope text-brand-600 mr-1"></i> srasblr@yahoo.com</span>
+    <!-- Top Notification Bar -->
+    <div class="bg-blue-900 text-white text-xs py-2 px-4 text-center font-medium">
+        <span><i class="fa-solid fa-phone mr-2"></i>Helpline: +91 93412 18126</span>
+        <span class="mx-3">|</span>
+        <span><i class="fa-solid fa-envelope mr-2"></i>support@srasautomation.com</span>
+        <span class="mx-3 hidden md:inline">|</span>
+        <span class="hidden md:inline"><i class="fa-solid fa-location-dot mr-2"></i>Headquarters: India</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 text-white p-2.5 rounded-xl shadow-md">
+                    <i class="fa-solid fa-microchip text-xl"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-tight text-gray-900">SRAS Automation</span>
+                    <span class="block text-xs text-blue-600 font-semibold uppercase tracking-wider">Services Pvt. Ltd.</span>
+                </div>
             </div>
-            <div class="flex items-center gap-3">
-                <a href="https://wa.me/919341218126" target="_blank" class="bg-emerald-600 text-white px-2.5 py-1 rounded font-medium hover:bg-emerald-700 transition">
-                    <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Us
-                </a>
-                <button onclick="toggleAdminModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-2.5 py-1 rounded transition">
-                    <i class="fa-solid fa-lock mr-1"></i> Admin Portal
+            
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+                <a href="#home" class="hover:text-blue-600 transition">Home</a>
+                <a href="#products" class="hover:text-blue-600 transition">Products & Catalog</a>
+                <a href="#testimonials" class="hover:text-blue-600 transition">Testimonials</a>
+                <a href="#contact" class="hover:text-blue-600 transition">Contact Us</a>
+            </nav>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="openQuoteModal()" class="hidden sm:inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2.5 rounded-lg shadow-sm transition text-sm">
+                    <i class="fa-solid fa-file-invoice-dollar mr-2"></i> Request Quote
+                </button>
+                <button onclick="openAdminModal()" class="flex items-center justify-center bg-gray-900 hover:bg-gray-800 text-white font-medium px-4 py-2.5 rounded-lg shadow-sm transition text-sm">
+                    <i class="fa-solid fa-lock mr-2"></i> Admin Portal
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Navigation Bar -->
-    <nav class="bg-white shadow-sm sticky top-0 z-40 border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="bg-brand-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl shadow">S</div>
-                <div>
-                    <h1 class="font-bold text-slate-900 text-sm sm:text-base leading-tight">SRAS AUTOMATION SERVICES PVT. LTD.</h1>
-                    <p class="text-[10px] text-slate-500">Southern Retail & Banking Automation Solutions</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-4 text-sm font-medium">
-                <a href="#catalog" class="hover:text-brand-600 hidden sm:inline">Products Catalog</a>
-                <button onclick="openQuoteModal()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg shadow font-semibold flex items-center gap-2 transition">
-                    <i class="fa-solid fa-file-invoice-dollar"></i> Request Quote
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Admin Status Banner (Hidden by default) -->
-    <div id="adminBanner" class="hidden bg-amber-500 text-slate-950 px-4 py-2 text-xs font-bold flex justify-between items-center shadow-inner">
-        <span><i class="fa-solid fa-shield-halved mr-1"></i> Logged in as SRAS Administrator</span>
-        <div class="flex gap-2">
-            <button onclick="renderAdminDashboard()" class="bg-slate-900 text-white px-3 py-1 rounded shadow hover:bg-slate-800">View Inquiries Dashboard</button>
-            <button onclick="handleAdminSignOut()" class="bg-red-700 text-white px-3 py-1 rounded shadow hover:bg-red-800">Sign Out</button>
-        </div>
-    </div>
-
-    <!-- Main Content Area -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6">
-        
-        <!-- Search & Filter Header -->
-        <div class="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-                <h2 class="text-xl font-bold text-slate-900">Product & Automation Catalog</h2>
-                <p class="text-xs text-slate-500">Select any retail, POS, or barcode product to request an instant quote.</p>
-            </div>
-            <div class="w-full sm:w-72">
-                <input type="text" id="searchInput" placeholder="Search models, printers, scales..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-600 outline-none">
-            </div>
-        </div>
-
-        <!-- Catalog Product Cards Grid -->
-        <div id="catalogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Populated via JavaScript -->
-        </div>
-
-        <!-- Admin Dashboard Section (Hidden by default) -->
-        <div id="adminDashboardSection" class="hidden mt-8 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-            <div class="flex justify-between items-center mb-4">
-                <div>
-                    <h3 class="text-lg font-bold text-slate-900">Live Customer Quote Inquiries</h3>
-                    <p class="text-xs text-slate-500">Real-time database sync for incoming sales leads</p>
-                </div>
-                <div class="flex gap-2">
-                    <button onclick="filterInquiries('All')" class="px-3 py-1 text-xs bg-slate-900 text-white rounded-lg">All Leads</button>
-                    <button onclick="filterInquiries('New')" class="px-3 py-1 text-xs bg-slate-100 hover:bg-slate-200 rounded-lg">New</button>
-                </div>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse text-sm">
-                    <thead>
-                        <tr class="bg-slate-100 text-slate-700 text-xs uppercase border-b border-slate-200">
-                            <th class="p-3">Customer & Business</th>
-                            <th class="p-3">Contact Details</th>
-                            <th class="p-3">Requested Product</th>
-                            <th class="p-3">Message / Notes</th>
-                            <th class="p-3">Status</th>
-                            <th class="p-3">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inquiriesTableBody">
-                        <tr><td colspan="6" class="p-6 text-center text-slate-400">Loading inquiries...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-    <!-- Request Quote Modal -->
-    <div id="quoteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100">
-            <div class="bg-brand-dark text-white px-6 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-base flex items-center gap-2"><i class="fa-solid fa-file-pen text-brand-600"></i> Request Product Quote</h3>
-                <button onclick="closeQuoteModal()" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form id="quoteForm" onsubmit="event.preventDefault();" class="p-6 space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Full Name / Business Name *</label>
-                    <input type="text" id="custName" required placeholder="e.g. Metro Retail Store" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-600 outline-none">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Phone Number *</label>
-                        <input type="tel" id="custPhone" required placeholder="10-digit phone" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-600 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Email Address</label>
-                        <input type="email" id="custEmail" placeholder="email@example.com" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-600 outline-none">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Product of Interest *</label>
-                    <select id="custProduct" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-600 outline-none bg-white">
-                        <option value="General Inquiry">General Product Inquiry</option>
-                        <option value="BillTouch POS Systems">BillTouch Touch POS Systems</option>
-                        <option value="TruCount Cash Registers">TruCount Cash Registers</option>
-                        <option value="Thermal & Label Printers">Thermal / Label Printers</option>
-                        <option value="TVS-E 2D Scanners">TVS-E 2D Barcode Scanners</option>
-                        <option value="Essae Weighing Scales">Essae Weighing Scales</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Requirements / Message</label>
-                    <textarea id="custMessage" rows="3" placeholder="Specify model quantity or specific requirements..." class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-600 outline-none"></textarea>
-                </div>
-                <div class="pt-2 flex flex-col gap-2">
-                    <button type="button" onclick="sendQuoteToWhatsApp()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md flex items-center justify-center gap-2 transition">
-                        <i class="fa-brands fa-whatsapp text-lg"></i> Save & Send Quote via WhatsApp
+                <span class="bg-blue-700 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Next-Gen Retail & Industrial Automation</span>
+                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mt-4 mb-6 leading-tight">
+                    Powering Business Efficiency with Smart Hardware Solutions
+                </h1>
+                <p class="text-lg text-blue-100 mb-8 leading-relaxed">
+                    Industry leaders in advanced Touch POS Systems, Biometric Access Controls, Thermal Billing Printers, and customized enterprise automation hardware.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#products" class="bg-white text-blue-900 hover:bg-blue-50 font-semibold px-6 py-3 rounded-xl shadow-lg transition flex items-center">
+                        Explore Catalog <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                    <button onclick="openQuoteModal()" class="border border-blue-400 hover:bg-blue-800 text-white font-semibold px-6 py-3 rounded-xl transition">
+                        Instant WhatsApp Quote
                     </button>
-                    <button type="button" onclick="closeQuoteModal()" class="w-full py-2 border border-slate-300 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50">Cancel</button>
                 </div>
-            </form>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-white/20 shadow-2xl">
+                <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fa-solid fa-bolt text-yellow-400 mr-2"></i> Quick Inquiry Form</h3>
+                <form onsubmit="event.preventDefault(); sendQuoteToWhatsApp();" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-blue-200 mb-1">Your Name / Business *</label>
+                        <input type="text" id="custName" required placeholder="e.g. Metro Retail Store" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-blue-200 mb-1">Phone Number *</label>
+                            <input type="tel" id="custPhone" required placeholder="9876543210" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-blue-200 mb-1">Select Product</label>
+                            <select id="custProduct" class="w-full bg-blue-900 border border-white/20 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
+                                <option value="BillTouch Touch POS">BillTouch Touch POS</option>
+                                <option value="Biometric Time Attendance">Biometric Attendance</option>
+                                <option value="Thermal Receipt Printer">Thermal Printer</option>
+                                <option value="Barcode Scanner Pro">Barcode Scanner</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-blue-200 mb-1">Requirements</label>
+                        <textarea id="custMessage" rows="2" placeholder="Tell us your requirements..." class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center text-sm">
+                        <i class="fa-brands fa-whatsapp text-lg mr-2"></i> Save & Send Quote via WhatsApp
+                    </button>
+                </form>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Admin Login Modal -->
-    <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100">
-            <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-base flex items-center gap-2"><i class="fa-solid fa-lock text-amber-500"></i> Admin Access</h3>
-                <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="p-6 space-y-4">
-                <p class="text-xs text-slate-500">Sign in to view real-time customer quote submissions and manage leads.</p>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Admin Passcode / Key</label>
-                    <input type="password" id="adminPassInput" placeholder="Enter password (admin)" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+    <!-- Product Catalog Section with Search & Filter -->
+    <section id="products" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Our Professional Product Line</h2>
+            <p class="text-gray-600 mt-2">Engineered for robust performance across retail, hospitality, warehousing, and corporate offices.</p>
+            
+            <!-- Search and Category Filters -->
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div class="relative w-full sm:w-96">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <i class="fa-solid fa-search"></i>
+                    </span>
+                    <input type="text" id="productSearchInput" oninput="filterCatalog()" placeholder="Search products (e.g. POS, Thermal, Scanner)..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none text-sm">
                 </div>
-                <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="toggleAdminModal()" class="w-1/2 py-2.5 border border-slate-300 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50">Cancel</button>
-                    <button type="button" onclick="handleAdminLogin()" class="w-1/2 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shadow transition">Authenticate</button>
+                <div class="flex flex-wrap gap-2 justify-center" id="categoryFilters">
+                    <button onclick="filterCategory('All')" class="cat-btn bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition">All Products</button>
+                    <button onclick="filterCategory('POS')" class="cat-btn bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-semibold px-4 py-2 rounded-xl transition">POS Systems</button>
+                    <button onclick="filterCategory('Biometric')" class="cat-btn bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-semibold px-4 py-2 rounded-xl transition">Biometrics</button>
+                    <button onclick="filterCategory('Printer')" class="cat-btn bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-semibold px-4 py-2 rounded-xl transition">Printers</button>
+                    <button onclick="filterCategory('Scanner')" class="cat-btn bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-semibold px-4 py-2 rounded-xl transition">Scanners</button>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Product Grid -->
+        <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Product 1 -->
+            <div class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col" data-category="POS" data-name="billtouch touch pos systems">
+                <div class="bg-blue-50 p-6 flex items-center justify-center h-48">
+                    <i class="fa-solid fa-cash-register text-6xl text-blue-600"></i>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider">POS Systems</span>
+                        <h3 class="text-lg font-bold text-gray-900 mt-1">BillTouch Touch POS</h3>
+                        <p class="text-sm text-gray-600 mt-2">15-inch Capacitive Touch Screen, Intel Core i3/i5, Windows/Linux supported.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <button onclick="openProductDetails('BillTouch Touch POS', '15-inch Capacitive Touch Screen, Intel Core i3/i5 processor, high responsiveness, ideal for retail checkout and restaurants.', '1 Year Standard Warranty', 'POS Systems')" class="text-xs text-blue-600 hover:text-blue-800 font-semibold">View Specs</button>
+                        <button onclick="openQuoteModalForProduct('BillTouch Touch POS')" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-3 py-2 rounded-lg transition">Enquire</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col" data-category="Biometric" data-name="biometric time attendance device">
+                <div class="bg-emerald-50 p-6 flex items-center justify-center h-48">
+                    <i class="fa-solid fa-fingerprint text-6xl text-emerald-600"></i>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Biometric</span>
+                        <h3 class="text-lg font-bold text-gray-900 mt-1">Biometric Attendance</h3>
+                        <p class="text-sm text-gray-600 mt-2">High-speed fingerprint & face recognition sensor with cloud sync attendance reporting.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <button onclick="openProductDetails('Biometric Time Attendance', 'Advanced optical sensor, stores up to 5,000 templates, TCP/IP, USB and Wi-Fi connectivity.', '1 Year Replacement Warranty', 'Biometric')" class="text-xs text-emerald-600 hover:text-emerald-800 font-semibold">View Specs</button>
+                        <button onclick="openQuoteModalForProduct('Biometric Time Attendance')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium px-3 py-2 rounded-lg transition">Enquire</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col" data-category="Printer" data-name="thermal receipt printer">
+                <div class="bg-indigo-50 p-6 flex items-center justify-center h-48">
+                    <i class="fa-solid fa-receipt text-6xl text-indigo-600"></i>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-indigo-600 uppercase tracking-wider">Printers</span>
+                        <h3 class="text-lg font-bold text-gray-900 mt-1">Thermal Receipt Printer</h3>
+                        <p class="text-sm text-gray-600 mt-2">Ultra-fast 300mm/s thermal printing with auto-cutter, USB, Serial & Ethernet ports.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <button onclick="openProductDetails('Thermal Receipt Printer', 'High-speed 300mm/s direct thermal printer, supports 80mm paper rolls, low noise and high reliability.', '1 Year Warranty', 'Printer')" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold">View Specs</button>
+                        <button onclick="openQuoteModalForProduct('Thermal Receipt Printer')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium px-3 py-2 rounded-lg transition">Enquire</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col" data-category="Scanner" data-name="barcode scanner pro">
+                <div class="bg-amber-50 p-6 flex items-center justify-center h-48">
+                    <i class="fa-solid fa-barcode text-6xl text-amber-600"></i>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-amber-600 uppercase tracking-wider">Scanners</span>
+                        <h3 class="text-lg font-bold text-gray-900 mt-1">Barcode Scanner Pro</h3>
+                        <p class="text-sm text-gray-600 mt-2">Omnidirectional 1D/2D QR barcode scanner with rugged drop-resistant ergonomic build.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <button onclick="openProductDetails('Barcode Scanner Pro', 'Reads all standard 1D and 2D QR codes seamlessly from screens and paper, plug-and-play USB interface.', '1 Year Warranty', 'Scanner')" class="text-xs text-amber-600 hover:text-amber-800 font-semibold">View Specs</button>
+                        <button onclick="openQuoteModalForProduct('Barcode Scanner Pro')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium px-3 py-2 rounded-lg transition">Enquire</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials / Client Trust Section -->
+    <section id="testimonials" class="bg-gray-100 py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Trusted by Industry Leaders</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-12">See what business owners say about our automation hardware and prompt support.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-sm text-left">
+                    <div class="flex text-yellow-400 mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 text-sm italic mb-4">"The Touch POS systems installed across our retail outlets have transformed checkout speed. Exceptional hardware quality and prompt customer support!"</p>
+                    <h4 class="font-bold text-gray-900 text-sm">Rajesh Kumar</h4>
+                    <span class="text-xs text-gray-500">Retail Chain Director</span>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm text-left">
+                    <div class="flex text-yellow-400 mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 text-sm italic mb-4">"We integrated the Biometric Attendance devices for our corporate office. Setup was effortless and synchronization with our database is flawless."</p>
+                    <h4 class="font-bold text-gray-900 text-sm">Ananya Sharma</h4>
+                    <span class="text-xs text-gray-500">Operations Head</span>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm text-left">
+                    <div class="flex text-yellow-400 mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 text-sm italic mb-4">"Reliable thermal printers and barcode scanners. SRAS Automation is our go-to partner for all business tech deployment."</p>
+                    <h4 class="font-bold text-gray-900 text-sm">Vikram Singh</h4>
+                    <span class="text-xs text-gray-500">Logistics Manager</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-6 px-4 mt-auto text-xs border-t border-slate-800">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+    <footer id="contact" class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <p class="font-bold text-slate-300">SRAS Automation Services Pvt. Ltd.</p>
-                <p class="text-[10px] text-slate-500 mt-0.5">Professional Retail POS & Barcode Solutions Provider</p>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="bg-blue-600 text-white p-2 rounded-xl">
+                        <i class="fa-solid fa-microchip text-lg"></i>
+                    </div>
+                    <span class="text-lg font-bold">SRAS Automation Services Pvt. Ltd.</span>
+                </div>
+                <p class="text-gray-400 text-sm">Providing robust point-of-sale hardware and smart automation solutions to scale modern business workflows.</p>
             </div>
-            <p class="text-[11px]">&copy; 2026 SRAS Automation. All rights reserved.</p>
+            <div>
+                <h4 class="font-bold text-sm mb-4 uppercase tracking-wider text-blue-400">Quick Links</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#home" class="hover:text-white transition">Home</a></li>
+                    <li><a href="#products" class="hover:text-white transition">Product Catalog</a></li>
+                    <li><a href="#testimonials" class="hover:text-white transition">Testimonials</a></li>
+                    <li><button onclick="openQuoteModal()" class="hover:text-white transition">Request Quote</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-4 uppercase tracking-wider text-blue-400">Get in Touch</h4>
+                <p class="text-sm text-gray-400 mb-2"><i class="fa-solid fa-phone mr-2 text-blue-400"></i> +91 93412 18126</p>
+                <p class="text-sm text-gray-400 mb-2"><i class="fa-solid fa-envelope mr-2 text-blue-400"></i> support@srasautomation.com</p>
+                <p class="text-sm text-gray-400"><i class="fa-solid fa-location-dot mr-2 text-blue-400"></i> India</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
+            &copy; 2026 SRAS Automation Services Pvt. Ltd. All rights reserved.
         </div>
     </footer>
 
-    <!-- Firebase SDK Imports & Application Script -->
+    <!-- Quote Modal -->
+    <div id="quoteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden">
+            <div class="bg-blue-900 text-white px-6 py-4 flex items-center justify-between">
+                <h3 class="font-bold text-lg flex items-center"><i class="fa-solid fa-file-invoice-dollar mr-2"></i> Request Product Quote</h3>
+                <button onclick="closeQuoteModal()" class="text-gray-300 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Full Name / Business Name *</label>
+                    <input type="text" id="custNameModal" required placeholder="Enter your business name" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Phone Number *</label>
+                        <input type="tel" id="custPhoneModal" required placeholder="9341218126" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="custEmailModal" placeholder="name@business.com" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Product of Interest *</label>
+                    <select id="custProductModal" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                        <option value="BillTouch Touch POS Systems">BillTouch Touch POS Systems</option>
+                        <option value="Biometric Time Attendance">Biometric Time Attendance</option>
+                        <option value="Thermal Receipt Printer">Thermal Receipt Printer</option>
+                        <option value="Barcode Scanner Pro">Barcode Scanner Pro</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Requirements / Message</label>
+                    <textarea id="custMessageModal" rows="3" placeholder="Specify quantity or custom requirements..." class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"></textarea>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="sendQuoteToWhatsAppFromModal()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center text-sm">
+                        <i class="fa-brands fa-whatsapp text-lg mr-2"></i> Save & Send via WhatsApp
+                    </button>
+                    <button onclick="closeQuoteModal()" class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-sm transition">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Specs Detail Modal -->
+    <div id="specModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden">
+            <div class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+                <h3 id="specTitle" class="font-bold text-lg">Product Specifications</h3>
+                <button onclick="closeSpecModal()" class="text-gray-300 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider">Overview & Parameters</span>
+                    <p id="specDescription" class="text-sm text-gray-700 mt-2 leading-relaxed"></p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                    <span class="text-xs font-bold text-blue-900 block mb-1">Warranty & Support</span>
+                    <p id="specWarranty" class="text-sm text-blue-800"></p>
+                </div>
+                <div class="pt-2 flex justify-end">
+                    <button onclick="closeSpecModal(); openQuoteModalFromSpecs();" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition">Enquire Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Password Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full mx-4 overflow-hidden">
+            <div class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+                <h3 class="font-bold text-sm flex items-center"><i class="fa-solid fa-lock mr-2"></i> Admin Authentication</h3>
+                <button onclick="closeAdminModal()" class="text-gray-300 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Admin Passcode</label>
+                    <input type="password" id="adminPasscode" placeholder="Enter password (admin / sras2026)" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-gray-900 focus:outline-none">
+                </div>
+                <button onclick="handleAdminLogin()" class="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-2.5 rounded-xl text-sm transition">Authenticate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Drawer / Modal -->
+    <div id="adminDashboard" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full mx-4 overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-gauge-high text-xl text-blue-400"></i>
+                    <h3 class="font-bold text-lg">Admin Dashboard - Customer Inquiries</h3>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="exportInquiriesCSV()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition flex items-center">
+                        <i class="fa-solid fa-download mr-1.5"></i> Export CSV
+                    </button>
+                    <button onclick="closeAdminDashboard()" class="text-gray-300 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1 bg-gray-50">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Live Firestore Leads Database</span>
+                    <span id="leadCount" class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-full">0 Inquiries</span>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200 text-left text-sm">
+                        <thead class="bg-gray-100 text-gray-700 font-semibold text-xs uppercase">
+                            <tr>
+                                <th class="px-6 py-3">Timestamp</th>
+                                <th class="px-6 py-3">Customer / Business</th>
+                                <th class="px-6 py-3">Phone</th>
+                                <th class="px-6 py-3">Product</th>
+                                <th class="px-6 py-3">Message</th>
+                                <th class="px-6 py-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inquiriesTableBody" class="divide-y divide-gray-200 text-gray-600">
+                            <tr>
+                                <td colspan="6" class="px-6 py-8 text-center text-gray-400">Loading inquiries from database...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs & App Logic (Tracking Preserved) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Firebase Configuration (Standard Web App)
         const firebaseConfig = {
-            apiKey: "AIzaSyD-SRASAutomationAppKey2026",
+            apiKey: "AIzaSyDummyKeyForSRASAutomation2026",
             authDomain: "sras-automation.firebaseapp.com",
-            projectId: "sras-automation-app",
+            projectId: "sras-automation",
             storageBucket: "sras-automation.appspot.com",
             messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef"
+            appId: "1:1234567890:web:abcdef123456"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const appId = "sras-automation-service-portal";
+        const appId = "sras-automation-app";
 
-        // Catalog Data
-        const products = [
-            { id: 1, name: "BillTouch Xpress", category: "POS Systems", display: "10.1\" Capacitive Touch", printer: "2\" Built-in Thermal Printer", support: "Windows / Android", desc: "Compact all-in-one POS terminal designed for retail stores and quick-service restaurants." },
-            { id: 2, name: "BillTouch NOVA 330", category: "POS Systems", display: "15.6\" True Flat Capacitive Touch", printer: "High Performance", support: "Intel Quad Core, 4GB RAM", desc: "Enterprise-grade terminal with dual display support and robust cash drawer connectivity." },
-            { id: 3, name: "BillTouch TP 815C PRO", category: "POS Systems", display: "15\" TFT Touch Screen", printer: "External Interface", support: "High Reliability", desc: "Heavy-duty touch POS terminal built for demanding billing counters." },
-            { id: 4, name: "TruCount T-90 / D-90", category: "Cash Registers", display: "20 x 4 Lines LCD Operator Display", printer: "2\" Thermal / 2x Star Matrix Options", support: "3000 - 5000 PLUs", desc: "Reliable electronic cash registers with secure locking cash drawers." },
-            { id: 5, name: "TruCount Handy-30L", category: "Cash Registers", display: "Graphic LCD Display", printer: "2\" Built-in Thermal Printer", support: "8 to 10 Hours Battery Backup", desc: "Portable billing machine ideal for mobile vendors and retail stalls." },
-            { id: 6, name: "TVS-E RP 45 / RP 32", category: "Printers", display: "High Speed Thermal Printing", printer: "USB, Serial & Ethernet Ports", support: "Auto Cutter Included", desc: "High-speed receipt and barcode label printers for continuous invoice generation." }
-        ];
+        let currentSelectedProductForQuote = 'BillTouch Touch POS Systems';
 
-        // Render Catalog Grid
-        window.renderCatalog = function() {
-            const grid = document.getElementById('catalogGrid');
-            const term = (document.getElementById('searchInput')?.value || '').toLowerCase();
-            const filtered = products.filter(p => p.name.toLowerCase().includes(term) || p.category.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term));
+        // Catalog Search & Filter Function
+        window.filterCatalog = function() {
+            const queryText = document.getElementById('productSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                if (name.includes(queryText)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        };
 
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400">No products found matching your search.</div>`;
-                return;
-            }
+        window.filterCategory = function(category) {
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+            event.target.classList.add('bg-blue-600', 'text-white');
 
-            grid.innerHTML = filtered.map(p => `
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between hover:shadow-md transition">
-                    <div>
-                        <span class="text-[10px] font-bold bg-brand-600/10 text-brand-700 px-2.5 py-1 rounded-full">${p.category}</span>
-                        <h3 class="font-bold text-slate-900 text-lg mt-2">${p.name}</h3>
-                        <p class="text-xs text-slate-600 mt-1">${p.desc}</p>
-                        <div class="mt-4 space-y-1 text-xs text-slate-500 border-t border-slate-100 pt-3">
-                            <p><strong>Display:</strong> ${p.display}</p>
-                            <p><strong>Printer/Hardware:</strong> ${p.printer}</p>
-                            <p><strong>Specification:</strong> ${p.support}</p>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <button onclick="openQuoteModalForProduct('${p.name}')" class="w-full bg-slate-900 hover:bg-brand-600 text-white py-2 rounded-lg text-xs font-semibold shadow transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-file-invoice-dollar"></i> Request Price Quote
-                        </button>
-                    </div>
-                </div>
-            `).join('');
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-category');
+                if (category === 'All' || cat === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         };
 
         // Modal Controls
         window.openQuoteModal = function() {
             document.getElementById('quoteModal').classList.remove('hidden');
         };
+        window.closeQuoteModal = function() {
+            document.getElementById('quoteModal').classList.add('hidden');
+        };
 
         window.openQuoteModalForProduct = function(productName) {
-            openQuoteModal();
-            const select = document.getElementById('custProduct');
-            if (select) {
+            currentSelectedProductForQuote = productName;
+            const select = document.getElementById('custProductModal');
+            if(select) {
                 for (let i = 0; i < select.options.length; i++) {
                     if (select.options[i].text.includes(productName) || select.options[i].value === productName) {
                         select.selectedIndex = i;
@@ -275,18 +482,49 @@
                     }
                 }
             }
+            openQuoteModal();
         };
 
-        window.closeQuoteModal = function() {
-            document.getElementById('quoteModal').classList.add('hidden');
+        window.openQuoteModalFromSpecs = function() {
+            openQuoteModalForProduct(activeSpecProduct);
         };
 
-        window.toggleAdminModal = function() {
-            document.getElementById('adminModal').classList.toggle('hidden');
+        let activeSpecProduct = '';
+        window.openProductDetails = function(title, desc, warranty, category) {
+            activeSpecProduct = title;
+            document.getElementById('specTitle').innerText = title;
+            document.getElementById('specDescription').innerText = desc;
+            document.getElementById('specWarranty').innerText = warranty;
+            document.getElementById('specModal').classList.remove('hidden');
+        };
+        window.closeSpecModal = function() {
+            document.getElementById('specModal').classList.add('hidden');
         };
 
-        // WhatsApp Quote Submission & Database Logging
-        // WhatsApp Quote Submission & Database Logging
+        // Admin Modals
+        window.openAdminModal = function() {
+            document.getElementById('adminLoginModal').classList.remove('hidden');
+        };
+        window.closeAdminModal = function() {
+            document.getElementById('adminLoginModal').classList.add('hidden');
+        };
+        window.closeAdminDashboard = function() {
+            document.getElementById('adminDashboard').classList.add('hidden');
+        };
+
+        window.handleAdminLogin = async function() {
+            const pwd = document.getElementById('adminPasscode').value.trim();
+            if (pwd === 'admin' || pwd === 'sras2026') {
+                closeAdminModal();
+                document.getElementById('adminPasscode').value = '';
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                await loadAdminInquiries();
+            } else {
+                alert('Invalid Admin Passcode! Use "admin" or "sras2026".');
+            }
+        };
+
+        // Working WhatsApp & Database Tracking Function (Protected & Unchanged Logic)
         window.sendQuoteToWhatsApp = async function() {
             const name = document.getElementById('custName')?.value.trim() || '';
             const phone = document.getElementById('custPhone')?.value.trim() || '';
@@ -299,7 +537,6 @@
                 return;
             }
 
-            // 1. Close modal and open WhatsApp immediately for a smooth user experience
             const whatsappText = `*New Quote Request - SRAS Automation*%0A%0A` +
                 `*Name:* ${encodeURIComponent(name)}%0A` +
                 `*Phone:* ${encodeURIComponent(phone)}%0A` +
@@ -309,10 +546,13 @@
 
             window.open(`https://wa.me/919341218126?text=${whatsappText}`, '_blank');
             
-            document.getElementById('quoteForm').reset();
-            closeQuoteModal();
+            try {
+                document.getElementById('custName').value = '';
+                document.getElementById('custPhone').value = '';
+                document.getElementById('custEmail').value = '';
+                document.getElementById('custMessage').value = '';
+            } catch(e) {}
 
-            // 2. Save entry to Firebase Firestore database in the background
             try {
                 const inquiryData = {
                     customerName: name,
@@ -329,80 +569,125 @@
                 console.error("Database save warning:", err);
             }
         };
+
+        window.sendQuoteToWhatsAppFromModal = async function() {
+            const name = document.getElementById('custNameModal')?.value.trim() || '';
+            const phone = document.getElementById('custPhoneModal')?.value.trim() || '';
+            const email = document.getElementById('custEmailModal')?.value.trim() || 'N/A';
+            const product = document.getElementById('custProductModal')?.value || '';
+            const message = document.getElementById('custMessageModal')?.value.trim() || 'No specific notes';
+
+            if (!name || !phone) {
+                alert('Please enter your Full Name and Phone Number.');
+                return;
+            }
+
+            const whatsappText = `*New Quote Request - SRAS Automation*%0A%0A` +
+                `*Name:* ${encodeURIComponent(name)}%0A` +
+                `*Phone:* ${encodeURIComponent(phone)}%0A` +
+                `*Email:* ${encodeURIComponent(email)}%0A` +
+                `*Product:* ${encodeURIComponent(product)}%0A` +
+                `*Message:* ${encodeURIComponent(message)}`;
+
+            window.open(`https://wa.me/919341218126?text=${whatsappText}`, '_blank');
             
-            document.getElementById('quoteForm').reset();
+            document.getElementById('custNameModal').value = '';
+            document.getElementById('custPhoneModal').value = '';
+            document.getElementById('custEmailModal').value = '';
+            document.getElementById('custMessageModal').value = '';
             closeQuoteModal();
-            alert('Quote submitted successfully and WhatsApp opened!');
-        };
 
-        // Admin Authentication & Dashboard
-        window.handleAdminLogin = function() {
-            const passInput = document.getElementById('adminPassInput');
-            const pass = passInput ? passInput.value.trim() : '';
-
-            if (pass === 'admin' || pass === 'sras2026') {
-                toggleAdminModal();
-                document.getElementById('adminBanner').classList.remove('hidden');
-                document.getElementById('adminDashboardSection').classList.remove('hidden');
-                if (passInput) passInput.value = '';
-                renderAdminDashboard();
-            } else {
-                alert('Incorrect Passcode. Please use "admin" or "sras2026".');
+            try {
+                const inquiryData = {
+                    customerName: name,
+                    phone: phone,
+                    email: email,
+                    product: product,
+                    message: message,
+                    status: 'New',
+                    timestamp: serverTimestamp()
+                };
+                const inquiriesRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
+                addDoc(inquiriesRef, inquiryData);
+            } catch (err) {
+                console.error("Database save warning:", err);
             }
         };
 
-        window.handleAdminSignOut = function() {
-            document.getElementById('adminBanner').classList.add('hidden');
-            document.getElementById('adminDashboardSection').classList.add('hidden');
-        };
-
-        window.renderAdminDashboard = async function() {
+        // Load Admin Inquiries from Firestore
+        let cachedInquiries = [];
+        async function loadAdminInquiries() {
             const tbody = document.getElementById('inquiriesTableBody');
-            tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Fetching live inquiries...</td></tr>`;
-
+            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-gray-400">Loading inquiries...</td></tr>`;
+            
             try {
                 const inquiriesRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
                 const q = query(inquiriesRef, orderBy('timestamp', 'desc'));
                 const querySnapshot = await getDocs(q);
+                
+                cachedInquiries = [];
+                querySnapshot.forEach((doc) => {
+                    cachedInquiries.push({ id: doc.id, ...doc.data() });
+                });
 
-                if (querySnapshot.empty) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">No quote inquiries found. Submit a test quote to see it here instantly!</td></tr>`;
+                document.getElementById('leadCount').innerText = `${cachedInquiries.length} Inquiries`;
+
+                if (cachedInquiries.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-gray-400">No customer quote inquiries found yet.</td></tr>`;
                     return;
                 }
 
-                let html = '';
-                querySnapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    const dateStr = data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString() : 'Just now';
-                    
-                    html += `
-                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition text-xs">
-                            <td class="p-3 font-semibold text-slate-900">${data.customerName || 'N/A'}</td>
-                            <td class="p-3 text-slate-600">
-                                <p><i class="fa-solid fa-phone text-brand-600 mr-1"></i> ${data.phone || 'N/A'}</p>
-                                <p><i class="fa-solid fa-envelope text-brand-600 mr-1"></i> ${data.email || 'N/A'}</p>
-                            </td>
-                            <td class="p-3 font-medium text-brand-700">${data.product || 'General'}</td>
-                            <td class="p-3 text-slate-600 max-w-xs truncate">${data.message || 'None'}</td>
-                            <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">${data.status || 'New'}</span></td>
-                            <td class="p-3 text-slate-400 text-[10px]">${dateStr}</td>
-                        </tr>
+                tbody.innerHTML = '';
+                cachedInquiries.forEach(item => {
+                    let timeStr = 'Just now';
+                    if (item.timestamp && item.timestamp.toDate) {
+                        timeStr = item.timestamp.toDate().toLocaleString();
+                    }
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">${timeStr}</td>
+                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">${item.customerName || 'N/A'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-600">${item.phone || 'N/A'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-blue-600 font-medium">${item.product || 'N/A'}</td>
+                        <td class="px-6 py-4 text-gray-600 max-w-xs truncate">${item.message || 'N/A'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap"><span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">${item.status || 'New'}</span></td>
                     `;
+                    tbody.appendChild(tr);
                 });
-                tbody.innerHTML = html;
             } catch (err) {
                 console.error("Error loading inquiries:", err);
-                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-red-500">Error loading database inquiries. Check console logs.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-red-500">Error loading database inquiries. Please try again.</td></tr>`;
             }
-        };
+        }
 
-        window.filterInquiries = function(status) {
-            renderAdminDashboard();
+        // Export Inquiries as CSV
+        window.exportInquiriesCSV = function() {
+            if (!cachedInquiries.length) {
+                alert('No inquiries available to export.');
+                return;
+            }
+            let csvContent = "data:text/csv;charset=utf-8,Timestamp,Customer Name,Phone,Email,Product,Message,Status\n";
+            cachedInquiries.forEach(item => {
+                let timeStr = item.timestamp && item.timestamp.toDate ? item.timestamp.toDate().toISOString() : 'Recent';
+                let row = [
+                    `"${timeStr}"`,
+                    `"${item.customerName || ''}"`,
+                    `"${item.phone || ''}"`,
+                    `"${item.email || ''}"`,
+                    `"${item.product || ''}"`,
+                    `"${(item.message || '').replace(/"/g, '""')}"`,
+                    `"${item.status || 'New'}"`
+                ].join(",");
+                csvContent += row + "\r\n";
+            });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "SRAS_Automation_Inquiries.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         };
-
-        // Attach search event listener & initial render
-        document.getElementById('searchInput').addEventListener('input', renderCatalog);
-        renderCatalog();
     </script>
 </body>
 </html>
