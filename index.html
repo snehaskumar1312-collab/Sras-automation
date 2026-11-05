@@ -286,6 +286,7 @@
         };
 
         // WhatsApp Quote Submission & Database Logging
+        // WhatsApp Quote Submission & Database Logging
         window.sendQuoteToWhatsApp = async function() {
             const name = document.getElementById('custName')?.value.trim() || '';
             const phone = document.getElementById('custPhone')?.value.trim() || '';
@@ -298,7 +299,20 @@
                 return;
             }
 
-            // 1. Save entry to Firebase Firestore database (Admin Dashboard tracking)
+            // 1. Close modal and open WhatsApp immediately for a smooth user experience
+            const whatsappText = `*New Quote Request - SRAS Automation*%0A%0A` +
+                `*Name:* ${encodeURIComponent(name)}%0A` +
+                `*Phone:* ${encodeURIComponent(phone)}%0A` +
+                `*Email:* ${encodeURIComponent(email)}%0A` +
+                `*Product:* ${encodeURIComponent(product)}%0A` +
+                `*Message:* ${encodeURIComponent(message)}`;
+
+            window.open(`https://wa.me/919341218126?text=${whatsappText}`, '_blank');
+            
+            document.getElementById('quoteForm').reset();
+            closeQuoteModal();
+
+            // 2. Save entry to Firebase Firestore database in the background
             try {
                 const inquiryData = {
                     customerName: name,
@@ -310,20 +324,11 @@
                     timestamp: serverTimestamp()
                 };
                 const inquiriesRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
-                await addDoc(inquiriesRef, inquiryData);
+                addDoc(inquiriesRef, inquiryData);
             } catch (err) {
                 console.error("Database save warning:", err);
             }
-
-            // 2. Build WhatsApp text and open chat
-            const whatsappText = `*New Quote Request - SRAS Automation*%0A%0A` +
-                `*Name:* ${encodeURIComponent(name)}%0A` +
-                `*Phone:* ${encodeURIComponent(phone)}%0A` +
-                `*Email:* ${encodeURIComponent(email)}%0A` +
-                `*Product:* ${encodeURIComponent(product)}%0A` +
-                `*Message:* ${encodeURIComponent(message)}`;
-
-            window.open(`https://wa.me/919341218126?text=${whatsappText}`, '_blank');
+        };
             
             document.getElementById('quoteForm').reset();
             closeQuoteModal();
