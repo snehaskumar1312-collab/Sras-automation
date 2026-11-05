@@ -383,7 +383,7 @@
             </div>
             <div class="p-6 overflow-y-auto flex-1 bg-gray-50">
                 <div class="flex justify-between items-center mb-4">
-                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Live Firestore Leads Database</span>
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Local Leads Database Storage</span>
                     <span id="leadCount" class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-full">0 Inquiries</span>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
@@ -400,7 +400,7 @@
                         </thead>
                         <tbody id="inquiriesTableBody" class="divide-y divide-gray-200 text-gray-600">
                             <tr>
-                                <td colspan="6" class="px-6 py-8 text-center text-gray-400">Loading inquiries from database...</td>
+                                <td colspan="6" class="px-6 py-8 text-center text-gray-400">Loading inquiries...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -409,24 +409,8 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs & App Logic (Tracking Preserved) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForSRASAutomation2026",
-            authDomain: "sras-automation.firebaseapp.com",
-            projectId: "sras-automation",
-            storageBucket: "sras-automation.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef123456"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const appId = "sras-automation-app";
-
+    <!-- App Logic & Reliable LocalStorage Tracking Script -->
+    <script>
         let currentSelectedProductForQuote = 'BillTouch Touch POS Systems';
 
         // Catalog Search & Filter Function
@@ -512,20 +496,20 @@
             document.getElementById('adminDashboard').classList.add('hidden');
         };
 
-        window.handleAdminLogin = async function() {
+        window.handleAdminLogin = function() {
             const pwd = document.getElementById('adminPasscode').value.trim();
             if (pwd === 'admin' || pwd === 'sras2026') {
                 closeAdminModal();
                 document.getElementById('adminPasscode').value = '';
                 document.getElementById('adminDashboard').classList.remove('hidden');
-                await loadAdminInquiries();
+                loadAdminInquiries();
             } else {
                 alert('Invalid Admin Passcode! Use "admin" or "sras2026".');
             }
         };
 
-        // Working WhatsApp & Database Tracking Function (Protected & Unchanged Logic)
-        window.sendQuoteToWhatsApp = async function() {
+        // Reliable Tracking & WhatsApp Function (Hero Form)
+        window.sendQuoteToWhatsApp = function() {
             const name = document.getElementById('custName')?.value.trim() || '';
             const phone = document.getElementById('custPhone')?.value.trim() || '';
             const email = document.getElementById('custEmail')?.value.trim() || 'N/A';
@@ -536,6 +520,9 @@
                 alert('Please enter your Full Name and Phone Number.');
                 return;
             }
+
+            // Save entry locally to browser storage
+            saveInquiryLocally(name, phone, email, product, message);
 
             const whatsappText = `*New Quote Request - SRAS Automation*%0A%0A` +
                 `*Name:* ${encodeURIComponent(name)}%0A` +
@@ -549,28 +536,12 @@
             try {
                 document.getElementById('custName').value = '';
                 document.getElementById('custPhone').value = '';
-                document.getElementById('custEmail').value = '';
                 document.getElementById('custMessage').value = '';
             } catch(e) {}
-
-            try {
-                const inquiryData = {
-                    customerName: name,
-                    phone: phone,
-                    email: email,
-                    product: product,
-                    message: message,
-                    status: 'New',
-                    timestamp: serverTimestamp()
-                };
-                const inquiriesRef = collection(db, 'sras_inquiries');
-            addDoc(inquiriesRef, inquiryData);
-            } catch (err) {
-                console.error("Database save warning:", err);
-            }
         };
 
-        window.sendQuoteToWhatsAppFromModal = async function() {
+        // Reliable Tracking & WhatsApp Function (Modal Form)
+        window.sendQuoteToWhatsAppFromModal = function() {
             const name = document.getElementById('custNameModal')?.value.trim() || '';
             const phone = document.getElementById('custPhoneModal')?.value.trim() || '';
             const email = document.getElementById('custEmailModal')?.value.trim() || 'N/A';
@@ -581,6 +552,9 @@
                 alert('Please enter your Full Name and Phone Number.');
                 return;
             }
+
+            // Save entry locally to browser storage
+            saveInquiryLocally(name, phone, email, product, message);
 
             const whatsappText = `*New Quote Request - SRAS Automation*%0A%0A` +
                 `*Name:* ${encodeURIComponent(name)}%0A` +
@@ -596,81 +570,63 @@
             document.getElementById('custEmailModal').value = '';
             document.getElementById('custMessageModal').value = '';
             closeQuoteModal();
-
-            try {
-                const inquiryData = {
-                    customerName: name,
-                    phone: phone,
-                    email: email,
-                    product: product,
-                    message: message,
-                    status: 'New',
-                    timestamp: serverTimestamp()
-                };
-                const inquiriesRef = collection(db, 'sras_inquiries');
-                addDoc(inquiriesRef, inquiryData);
-            } catch (err) {
-                console.error("Database save warning:", err);
-            }
         };
 
-        // Load Admin Inquiries from Firestore
+        function saveInquiryLocally(name, phone, email, product, message) {
+            let inquiries = JSON.parse(localStorage.getItem('sras_inquiries') || '[]');
+            const newInquiry = {
+                id: Date.now(),
+                timestamp: new Date().toLocaleString(),
+                customerName: name,
+                phone: phone,
+                email: email,
+                product: product,
+                message: message,
+                status: 'New'
+            };
+            inquiries.unshift(newInquiry);
+            localStorage.setItem('sras_inquiries', JSON.stringify(inquiries));
+        }
+
+        // Load Inquiries into Admin Dashboard
         let cachedInquiries = [];
-        async function loadAdminInquiries() {
+        function loadAdminInquiries() {
             const tbody = document.getElementById('inquiriesTableBody');
-            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-gray-400">Loading inquiries...</td></tr>`;
+            cachedInquiries = JSON.parse(localStorage.getItem('sras_inquiries') || '[]');
             
-            try {
-                const inquiriesRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
-                const q = query(inquiriesRef, orderBy('timestamp', 'desc'));
-                const querySnapshot = await getDocs(q);
-                
-                cachedInquiries = [];
-                querySnapshot.forEach((doc) => {
-                    cachedInquiries.push({ id: doc.id, ...doc.data() });
-                });
+            document.getElementById('leadCount').innerText = `${cachedInquiries.length} Inquiries`;
 
-                document.getElementById('leadCount').innerText = `${cachedInquiries.length} Inquiries`;
-
-                if (cachedInquiries.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-gray-400">No customer quote inquiries found yet.</td></tr>`;
-                    return;
-                }
-
-                tbody.innerHTML = '';
-                cachedInquiries.forEach(item => {
-                    let timeStr = 'Just now';
-                    if (item.timestamp && item.timestamp.toDate) {
-                        timeStr = item.timestamp.toDate().toLocaleString();
-                    }
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">${timeStr}</td>
-                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">${item.customerName || 'N/A'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-600">${item.phone || 'N/A'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-blue-600 font-medium">${item.product || 'N/A'}</td>
-                        <td class="px-6 py-4 text-gray-600 max-w-xs truncate">${item.message || 'N/A'}</td>
-                        <td class="px-6 py-4 whitespace-nowrap"><span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">${item.status || 'New'}</span></td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            } catch (err) {
-                console.error("Error loading inquiries:", err);
-                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-red-500">Error loading database inquiries. Please try again.</td></tr>`;
+            if (cachedInquiries.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-gray-400">No customer quote inquiries found yet. Try submitting one!</td></tr>`;
+                return;
             }
+
+            tbody.innerHTML = '';
+            cachedInquiries.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">${item.timestamp}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">${item.customerName || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">${item.phone || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-blue-600 font-medium">${item.product || 'N/A'}</td>
+                    <td class="px-6 py-4 text-gray-600 max-w-xs truncate">${item.message || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap"><span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">${item.status || 'New'}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         // Export Inquiries as CSV
         window.exportInquiriesCSV = function() {
+            cachedInquiries = JSON.parse(localStorage.getItem('sras_inquiries') || '[]');
             if (!cachedInquiries.length) {
                 alert('No inquiries available to export.');
                 return;
             }
             let csvContent = "data:text/csv;charset=utf-8,Timestamp,Customer Name,Phone,Email,Product,Message,Status\n";
             cachedInquiries.forEach(item => {
-                let timeStr = item.timestamp && item.timestamp.toDate ? item.timestamp.toDate().toISOString() : 'Recent';
                 let row = [
-                    `"${timeStr}"`,
+                    `"${item.timestamp}"`,
                     `"${item.customerName || ''}"`,
                     `"${item.phone || ''}"`,
                     `"${item.email || ''}"`,
